@@ -7,7 +7,7 @@ public class Question : IEntity
 {
     public Guid Id { get; set; }
     
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public string Description { get; set; } = null!;
 

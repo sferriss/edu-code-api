@@ -1,4 +1,5 @@
-﻿using Edu.Code.Database.Abstractions;
+﻿using System.Reflection;
+using Edu.Code.Database.Abstractions;
 using Edu.Code.Database.Contexts;
 using Edu.Code.Database.Repositories.Questions;
 using Edu.Code.Domain.Questions.Repositories;
@@ -13,6 +14,7 @@ public static class ServiceCollectionExtension
     {
         _ = services ?? throw new ArgumentNullException(nameof(services));
         
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
         services.AddDatabase(connectionString);
         services.AddRepositories();
     }
