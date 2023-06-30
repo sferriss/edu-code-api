@@ -3,7 +3,7 @@ using Edu.Code.Domain.Questions.Entities;
 using Edu.Code.Domain.Questions.Repositories;
 using MediatR;
 
-namespace Edu.Code.Application.Commads.Questions;
+namespace Edu.Code.Application.Commads.Questions.Create;
 
 public class CreateQuestionListCommandHandler : IRequestHandler<CreateQuestionListCommand, CreateQuestionListCommandResult>
 {

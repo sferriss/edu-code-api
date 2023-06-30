@@ -22,4 +22,8 @@
       <ProjectReference Include="..\Edu.Code.Application\Edu.Code.Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="ExceptionHandlers\Responses\" />
+    </ItemGroup>
+
 </Project>
