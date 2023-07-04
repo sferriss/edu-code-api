@@ -16,13 +16,15 @@ public class GetAllPagedQueryHandler : IRequestHandler<GetAllPagedQuery, Paginat
 
     public async Task<PaginatedResult<GetAllPagedQueryResult>> Handle(GetAllPagedQuery request, CancellationToken cancellationToken)
     {
-        var result = await _questionRepository.GetAllPagedAsync(request.PageNumber, request.PageSize)
+        var result = await _questionRepository.GetByListIdPagedAsync(request.ListId, request.PageNumber, request.PageSize)
             .ConfigureAwait(false);
 
         return new PaginatedResult<GetAllPagedQueryResult>
         {
-            TotalCount = result.TotalCount,
-            Items = result.Items?.Select(MapToResult)
+            Items = result.Items?.Select(MapToResult),
+            PageSize = result.PageSize,
+            Page = result.Page,
+            Total = result.Total,
         };
     }
 

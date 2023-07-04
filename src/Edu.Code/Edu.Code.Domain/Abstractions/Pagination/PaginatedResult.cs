@@ -2,10 +2,12 @@
 
 public class PaginatedResult<T>
 {
-    public PaginatedResult(int count, IEnumerable<T> items)
+    public PaginatedResult(int count, IEnumerable<T> items, int page, int pageSize)
     {
-        TotalCount = count;
+        Total = count;
         Items = items;
+        Page = page;
+        PageSize = pageSize;
     }
 
     public PaginatedResult()
@@ -13,6 +15,12 @@ public class PaginatedResult<T>
     }
 
     public IEnumerable<T>? Items { get; set; }
+
+    public int Page { get; set; }
     
-    public int TotalCount { get; set; }
+    public int PageSize { get; set; }
+
+    public int Pages => (int)Math.Ceiling(Total / (PageSize == 0 ? 1.0 : PageSize));
+    
+    public int Total { get; set; }
 }

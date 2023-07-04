@@ -14,11 +14,12 @@ public class QuestionRepository : RepositoryBase<Question>, IQuestionRepository
     {
     }
 
-    public Task<PaginatedResult<Question>> GetAllPagedAsync(int pageNumber, int pageSize)
+    public Task<PaginatedResult<Question>> GetByListIdPagedAsync(Guid listId, int pageNumber, int pageSize)
     {
         return GetQuery()
             .AsNoTracking()
             .Include(_ => _.List)
+            .Where(_ => _.ListId == listId)
             .ToPaginateAsync(pageSize, pageNumber);
     }
 }

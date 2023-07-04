@@ -19,10 +19,11 @@ public static class QueryExtension
 
         var count = await query.CountAsync()
             .ConfigureAwait(false);
+        
         var items = await paginated.ToArrayAsync()
             .ConfigureAwait(false);
 
-        return new PaginatedResult<T>(count, items);
+        return new PaginatedResult<T>(count, items, pageNumber, pageSize);
     }
     
     public static IQueryable<T> ConditionalFilter<T>(this IQueryable<T> query, Expression<Func<T, bool>> expression, bool condition)

@@ -6,5 +6,5 @@ namespace Edu.Code.Domain.Questions.Repositories;
 
 public interface IQuestionRepository : IRepository<Question>
 {
-    public Task<PaginatedResult<Question>> GetAllPagedAsync(int pageNumber, int pageSize);
+    public Task<PaginatedResult<Question>> GetByListIdPagedAsync(Guid listId, int pageNumber, int pageSize);
 }
