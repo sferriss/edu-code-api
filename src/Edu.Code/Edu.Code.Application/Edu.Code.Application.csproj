@@ -18,8 +18,4 @@
       <ProjectReference Include="..\Edu.Code.Database\Edu.Code.Database.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Queries\" />
-    </ItemGroup>
-
 </Project>
