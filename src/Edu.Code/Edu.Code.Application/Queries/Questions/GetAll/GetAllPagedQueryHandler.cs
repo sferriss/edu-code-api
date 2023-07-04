@@ -30,6 +30,7 @@ public class GetAllPagedQueryHandler : IRequestHandler<GetAllPagedQuery, Paginat
     {
         return new()
         {
+            Id = question.Id,
             Description = question.Description,
             Example = question.Example,
             Difficult = question.Difficulty

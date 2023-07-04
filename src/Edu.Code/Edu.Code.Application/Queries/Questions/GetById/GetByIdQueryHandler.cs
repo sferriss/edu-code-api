@@ -24,6 +24,7 @@ public class GetByIdQueryHandler : IRequestHandler<GetByIdQuery, GetByIdQueryRes
 
         return new()
         {
+            Id = result.Id,
             Description = result.Description,
             Difficult = result.Difficulty,
             Example = result.Example,
