@@ -8,15 +8,23 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<EduCodeDbC
 {
     public EduCodeDbContext CreateDbContext(string[] args)
     {
-        var configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(new Dictionary<string, string>
-            {
-                ["ConnectionStrings:EduCode"] = "Host=localhost;Database=edu-code;Username=postgres;Password=postgres;Port=5432",
-            }!)
-            .AddEnvironmentVariables("App_")
-            .Build();
+        // var configuration = new ConfigurationBuilder()
+        //     .AddInMemoryCollection(new Dictionary<string, string>
+        //     {
+        //         ["ConnectionStrings:EduCode"] = "Host=localhost;Database=edu-code;Username=postgres;Password=postgres;Port=5432",
+        //     }!)
+        //     .AddEnvironmentVariables("App_")
+        //     .Build();
+        //
+        // var connectionString = configuration.GetConnectionString("EduCode");
+        // var builder = new DbContextOptionsBuilder<EduCodeDbContext>();
+        // builder.UseNpgsql(connectionString);
+        
+        
+        DotNetEnv.Env.Load();
 
-        var connectionString = configuration.GetConnectionString("EduCode");
+        var connectionString = Environment.GetEnvironmentVariable("CONNECTIONSTRINGS__EDUCODE");
+
         var builder = new DbContextOptionsBuilder<EduCodeDbContext>();
         builder.UseNpgsql(connectionString);
 

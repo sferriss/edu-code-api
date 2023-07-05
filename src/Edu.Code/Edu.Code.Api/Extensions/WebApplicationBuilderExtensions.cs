@@ -8,7 +8,8 @@ public static class WebApplicationBuilderExtensions
 {
     public static void ConfigureServices(this WebApplicationBuilder builder)
     {
-        builder.Services.AddEduCodeApi(builder.Configuration.GetConnectionString("EduCode")!);
+        DotNetEnv.Env.Load();
+        builder.Services.AddEduCodeApi(Environment.GetEnvironmentVariable("CONNECTIONSTRINGS__EDUCODE")!);
         RegisterExceptionHandlers(builder.Services);
     }
     
