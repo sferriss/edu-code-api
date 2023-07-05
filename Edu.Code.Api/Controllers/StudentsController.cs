@@ -3,6 +3,7 @@ using Edu.Code.Application.Queries.Lists.GetAll;
 using Edu.Code.Application.Queries.Questions.GetAll;
 using Edu.Code.Application.Queries.Questions.GetById;
 using Edu.Code.Domain.Abstractions.Pagination;
+using Edu.Code.External.Client;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,10 +14,12 @@ namespace Edu.Code.Api.Controllers;
 public class StudentsController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly CompilerApiClient _compilerApi;
 
-    public StudentsController(IMediator mediator)
+    public StudentsController(IMediator mediator, CompilerApiClient compilerApi)
     {
         _mediator = mediator;
+        _compilerApi = compilerApi;
     }
     
     [HttpGet("questions-all/{listId:guid:required}")]
@@ -53,6 +56,20 @@ public class StudentsController : ControllerBase
         var result = await _mediator.Send(query)
             .ConfigureAwait(false);
 
+        return Ok(result);
+    }
+    
+    [HttpPost("teste")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetAllListPagedQueryResult))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionResponse))]
+    public async Task<IActionResult> PostAllListsAsync()
+    {
+        var result = await _compilerApi.CompilerApi.PostExecuteAsync(new()
+        {
+            Language = "java",
+            Script = "public class HelloWorld {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, World!\")\n    }\n}",
+        });
         return Ok(result);
     }
 }

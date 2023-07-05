@@ -21,6 +21,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Edu.Code.Application\Edu.Code.Application.csproj" />
+      <ProjectReference Include="..\Edu.Code.External.Client\Edu.Code.External.Client.csproj" />
     </ItemGroup>
 
 </Project>

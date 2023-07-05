@@ -2,6 +2,7 @@
 using Edu.Code.Api.ExceptionHandlers.Factories;
 using Edu.Code.Application.Extensions;
 using Edu.Code.Database.Contexts;
+using Edu.Code.External.Client.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Edu.Code.Api.Extensions;
@@ -13,7 +14,9 @@ public static class WebApplicationBuilderExtensions
         var pathEnv = builder.Configuration.GetValue<string>("AppOptions:PathEnv");
         DotNetEnv.Env.Load(pathEnv);
         builder.Services.AddEduCodeApi(Environment.GetEnvironmentVariable("CONNECTIONSTRINGS__EDUCODE")!);
+        
         RegisterExceptionHandlers(builder.Services);
+        builder.Services.AddCompilerApi();
     }
     
     public static ExceptionHandlerFactory AddExceptionHandlers(this IServiceCollection services)
