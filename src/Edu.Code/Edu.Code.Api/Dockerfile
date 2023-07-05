@@ -6,6 +6,10 @@ EXPOSE 443
 # syntax = docker/dockerfile:1.2
 RUN --mount=type=secret,id=_env,dst=/etc/secrets/.env cat /etc/secrets/.env
 
+RUN ls /src
+
+RUN ls /src/Edu.Code.Api
+
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["Edu.Code.Api/Edu.Code.Api.csproj", "Edu.Code.Api/"]
