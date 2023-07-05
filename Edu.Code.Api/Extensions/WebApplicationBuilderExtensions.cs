@@ -10,7 +10,7 @@ public static class WebApplicationBuilderExtensions
 {
     public static void ConfigureServices(this WebApplicationBuilder builder)
     {
-        DotNetEnv.Env.Load();
+        DotNetEnv.Env.Load("/etc/secrets/.env");
         builder.Services.AddEduCodeApi(Environment.GetEnvironmentVariable("CONNECTIONSTRINGS__EDUCODE")!);
         RegisterExceptionHandlers(builder.Services);
     }
