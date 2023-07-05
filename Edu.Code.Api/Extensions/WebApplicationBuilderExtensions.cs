@@ -10,7 +10,8 @@ public static class WebApplicationBuilderExtensions
 {
     public static void ConfigureServices(this WebApplicationBuilder builder)
     {
-        DotNetEnv.Env.Load("/etc/secrets/.env");
+        var pathEnv = builder.Configuration.GetValue<string>("AppOptions:PathEnv");
+        DotNetEnv.Env.Load(pathEnv);
         builder.Services.AddEduCodeApi(Environment.GetEnvironmentVariable("CONNECTIONSTRINGS__EDUCODE")!);
         RegisterExceptionHandlers(builder.Services);
     }
@@ -26,13 +27,11 @@ public static class WebApplicationBuilderExtensions
     
     public static void MigrationInitialisation(this IApplicationBuilder app)
     {
-        using (var serviceScope = app.ApplicationServices.CreateScope())
-        {
-            var serviceDb  = serviceScope.ServiceProvider
-                .GetService<EduCodeDbContext>();
+        using var serviceScope = app.ApplicationServices.CreateScope();
+        var serviceDb  = serviceScope.ServiceProvider
+            .GetService<EduCodeDbContext>();
                              
-            serviceDb!.Database.Migrate();
-        }
+        serviceDb!.Database.Migrate();
     }
 
     private static void RegisterExceptionHandlers(IServiceCollection services)
