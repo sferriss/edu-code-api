@@ -8,7 +8,7 @@ RUN --mount=type=secret,id=_env,dst=/etc/secrets/.env cat /etc/secrets/.env
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["Edu.Code.Api.csproj", "Edu.Code.Api/"]
+COPY ["./Edu.Code.Api.csproj", "Edu.Code.Api/"]
 RUN dotnet restore "Edu.Code.Api/Edu.Code.Api.csproj"
 COPY . .
 WORKDIR "/src/Edu.Code.Api"
