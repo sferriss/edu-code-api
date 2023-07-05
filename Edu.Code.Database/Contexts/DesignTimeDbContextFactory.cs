@@ -21,7 +21,7 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<EduCodeDbC
         // builder.UseNpgsql(connectionString);
         
         
-        DotNetEnv.Env.Load();
+        DotNetEnv.Env.Load("/etc/secrets/.env");
 
         var connectionString = Environment.GetEnvironmentVariable("CONNECTIONSTRINGS__EDUCODE");
 
