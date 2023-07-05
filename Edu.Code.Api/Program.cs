@@ -28,6 +28,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.MigrationInitialisation();
+
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();

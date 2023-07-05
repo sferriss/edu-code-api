@@ -1,6 +1,8 @@
 ﻿using Edu.Code.Api.ExceptionHandlers;
 using Edu.Code.Api.ExceptionHandlers.Factories;
 using Edu.Code.Application.Extensions;
+using Edu.Code.Database.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace Edu.Code.Api.Extensions;
 
@@ -20,6 +22,17 @@ public static class WebApplicationBuilderExtensions
         services.AddSingleton(factory);
 
         return factory;
+    }
+    
+    public static void MigrationInitialisation(this IApplicationBuilder app)
+    {
+        using (var serviceScope = app.ApplicationServices.CreateScope())
+        {
+            var serviceDb  = serviceScope.ServiceProvider
+                .GetService<EduCodeDbContext>();
+                             
+            serviceDb!.Database.Migrate();
+        }
     }
 
     private static void RegisterExceptionHandlers(IServiceCollection services)
