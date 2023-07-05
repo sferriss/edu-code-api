@@ -7,12 +7,12 @@ EXPOSE 443
 RUN --mount=type=secret,id=_env,dst=/etc/secrets/.env cat /etc/secrets/.env
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /edu-code-api/src/Edu.Code
+WORKDIR /src
 COPY ["Edu.Code.Api/Edu.Code.Api.csproj", "Edu.Code.Api/"]
 
 RUN dotnet restore "Edu.Code.Api/Edu.Code.Api.csproj"
 COPY . .
-WORKDIR "/edu-code-api/src/Edu.Code"
+WORKDIR "/src/Edu.Code.Api"
 RUN dotnet build "Edu.Code.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
