@@ -7,9 +7,6 @@ public class QuestionDataValidator : AbstractValidator<QuestionData>
 {
     public QuestionDataValidator()
     {
-        RuleFor(x => x.Answer)
-            .NotEmpty();
-        
         RuleFor(x => x.Description)
             .NotEmpty();
         

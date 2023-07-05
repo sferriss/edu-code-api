@@ -37,8 +37,7 @@ public class QuestionMapping : IEntityTypeConfiguration<Question>
         
         builder
             .Property(_ => _.Answer)
-            .HasColumnName("answer")
-            .IsRequired();
+            .HasColumnName("answer");
         
         builder
             .Property(_ => _.Example)

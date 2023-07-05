@@ -3,13 +3,10 @@ using FluentValidation;
 
 namespace Edu.Code.Application.Commads.Questions.Create;
 
-public class CreateQuestionListCommandValidator : AbstractValidator<CreateQuestionListCommand>
+public class CreateQuestionCommandValidator : AbstractValidator<CreateQuestionCommand>
 {
-    public CreateQuestionListCommandValidator()
+    public CreateQuestionCommandValidator()
     {
-        RuleFor(x => x.Title)
-            .NotEmpty();
-
         When(_ => _.Questions is not null && _.Questions.Any(), () =>
         {
             RuleForEach(x => x.Questions)

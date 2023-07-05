@@ -11,7 +11,7 @@ public class Question : IEntity
 
     public string Description { get; set; } = null!;
 
-    public string Answer { get; set; } = null!;
+    public string? Answer { get; set; }
     
     public string? Example { get; set; }
 

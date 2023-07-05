@@ -6,7 +6,7 @@ public class QuestionData
 {
     public string Description { get; set; } = null!;
     
-    public string Answer { get; set; } = null!;
+    public string? Answer { get; set; }
     
     public string? Example { get; set; }
 

@@ -12,11 +12,6 @@ public class QuestionList : IEntity
 
     public List<Question> Questions  { get; } = new();
 
-    public void AddQuestion(Question question)
-    {
-        Questions.Add(question);
-    }
-    
     public void AddQuestion(IEnumerable<Question> question)
     {
         Questions.AddRange(question);

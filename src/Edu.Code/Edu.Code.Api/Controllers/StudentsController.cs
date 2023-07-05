@@ -1,4 +1,5 @@
 ﻿using Edu.Code.Api.ExceptionHandlers.Responses;
+using Edu.Code.Application.Queries.Lists.GetAll;
 using Edu.Code.Application.Queries.Questions.GetAll;
 using Edu.Code.Application.Queries.Questions.GetById;
 using Edu.Code.Domain.Abstractions.Pagination;
@@ -18,7 +19,7 @@ public class StudentsController : ControllerBase
         _mediator = mediator;
     }
     
-    [HttpGet("questions/{listId:guid:required}")]
+    [HttpGet("questions-all/{listId:guid:required}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedResult<GetAllPagedQueryResult>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionResponse))]
@@ -30,7 +31,7 @@ public class StudentsController : ControllerBase
         return Ok(result);
     }
     
-    [HttpGet("question/{id:guid:required}")]
+    [HttpGet("questions/{id:guid:required}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetByIdQueryResult))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ExceptionResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
@@ -38,6 +39,18 @@ public class StudentsController : ControllerBase
     public async Task<IActionResult> GetAllQuestionsAsync([FromRoute] Guid id)
     {
         var result = await _mediator.Send(new GetByIdQuery { Id = id })
+            .ConfigureAwait(false);
+
+        return Ok(result);
+    }
+    
+    [HttpGet("questions/list")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetAllListPagedQueryResult))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionResponse))]
+    public async Task<IActionResult> GetAllListsAsync([FromQuery] GetAllListPagedQuery query)
+    {
+        var result = await _mediator.Send(query)
             .ConfigureAwait(false);
 
         return Ok(result);
