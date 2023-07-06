@@ -17,6 +17,7 @@ public static class WebApplicationBuilderExtensions
         
         RegisterExceptionHandlers(builder.Services);
         builder.Services.AddCompilerApi();
+        builder.Services.AddOpenAiApi();
     }
     
     public static ExceptionHandlerFactory AddExceptionHandlers(this IServiceCollection services)
