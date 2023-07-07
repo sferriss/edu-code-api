@@ -1,39 +1,16 @@
-﻿namespace Edu.Code.External.Client.Responses.OpenAI;
+﻿using Edu.Code.External.Client.Responses.OpenAI.Common;
 
-public class GptConversationResponse
+namespace Edu.Code.External.Client.Responses.OpenAI;
+
+public sealed class GptConversationResponse
 {
-    public string Id { get; set; }
+    public string Id { get; set; } = null!;
     
-    public string Object { get; set; }
+    public string Object { get; set; } = null!;
     
     public long Created { get; set; }
     
-    public List<Choice> Choices { get; set; }
+    public List<ChoiceResponse> Choices { get; set; } = null!;
     
-    public Usage Usage { get; set; }
-}
-
-public class Choice
-{
-    public int Index { get; set; }
-    
-    public Message Message { get; set; }
-    
-    public string FinishReason { get; set; }
-}
-
-public class Message
-{
-    public string Role { get; set; }
-    
-    public string Content { get; set; }
-}
-
-public class Usage
-{
-    public int PromptTokens { get; set; }
-    
-    public int CompletionTokens { get; set; }
-    
-    public int TotalTokens { get; set; }
+    public UsageResponse Usage { get; set; } = null!;
 }
