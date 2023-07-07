@@ -16,6 +16,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Edu.Code.Database\Edu.Code.Database.csproj" />
+      <ProjectReference Include="..\Edu.Code.External.Client\Edu.Code.External.Client.csproj" />
     </ItemGroup>
 
 </Project>

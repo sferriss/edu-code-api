@@ -2,7 +2,7 @@
 
 public class CompileResponse
 {
-    public string? Output { get; set; }
+    public string Output { get; set; } = null!;
     
     public int StatusCode { get; set; }
     
