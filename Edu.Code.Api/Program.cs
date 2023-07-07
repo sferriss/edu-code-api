@@ -24,16 +24,16 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseCors(policies =>
-    {
-        policies.AllowAnyOrigin();
-        policies.AllowAnyHeader();
-        policies.AllowAnyMethod();
-    });
-    
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(policies =>
+{
+    policies.AllowAnyOrigin();
+    policies.AllowAnyHeader();
+    policies.AllowAnyMethod();
+});
 
 app.MigrationInitialisation();
 
