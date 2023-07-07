@@ -18,6 +18,7 @@ public class CompileCodeCommandHandler : IRequestHandler<CompileCodeCommand, Com
         {
             Language = request.Language,
             Script = request.Code,
+            Stdin = request.Input,
         });
 
         return new()
