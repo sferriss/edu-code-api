@@ -4,6 +4,7 @@ using Edu.Code.Database.Abstractions;
 using Edu.Code.Database.Contexts;
 using Edu.Code.Database.Repositories.Questions;
 using Edu.Code.Domain.Questions.Repositories;
+using Edu.Code.External.Client.Extensions;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ public static class ServiceCollectionExtension
         services.AddValidatorsFromAssemblyContaining<CreateQuestionListCommandValidator>();
         services.AddDatabase(connectionString);
         services.AddRepositories();
+        services.AddCompilerApi();
     }
     
     private static void AddDatabase(this IServiceCollection services, string connectionString)
