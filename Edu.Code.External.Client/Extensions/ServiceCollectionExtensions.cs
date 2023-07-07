@@ -1,5 +1,4 @@
 ﻿using Edu.Code.External.Client.HttpHandlers;
-using Edu.Code.External.Client.Settings;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Edu.Code.External.Client.Extensions;
