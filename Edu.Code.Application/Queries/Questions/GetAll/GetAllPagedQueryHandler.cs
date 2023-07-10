@@ -1,4 +1,5 @@
-﻿using Edu.Code.Domain.Abstractions.Pagination;
+﻿using Edu.Code.Application.Queries.Questions.Common;
+using Edu.Code.Domain.Abstractions.Pagination;
 using Edu.Code.Domain.Questions.Entities;
 using Edu.Code.Domain.Questions.Repositories;
 using MediatR;
@@ -33,9 +34,20 @@ public class GetAllPagedQueryHandler : IRequestHandler<GetAllPagedQuery, Paginat
         return new()
         {
             Id = question.Id,
+            Title = question.Title,
             Description = question.Description,
-            Example = question.Example,
+            Examples = question.Examples.Any() ? question.Examples.Select(MapExampleToEntity).ToArray() : null,
             Difficult = question.Difficulty
+        };
+    }
+    
+    private static ExampleResult MapExampleToEntity(QuestionExample example)
+    {
+        return new()
+        {
+            Id = example.Id,
+            Input = example.Input,
+            Output = example.Output
         };
     }
 }

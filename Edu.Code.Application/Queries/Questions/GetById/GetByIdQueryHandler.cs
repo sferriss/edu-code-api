@@ -1,4 +1,6 @@
 ﻿using Edu.Code.Application.Exceptions;
+using Edu.Code.Application.Queries.Questions.Common;
+using Edu.Code.Domain.Questions.Entities;
 using Edu.Code.Domain.Questions.Repositories;
 using MediatR;
 
@@ -15,7 +17,8 @@ public class GetByIdQueryHandler : IRequestHandler<GetByIdQuery, GetByIdQueryRes
 
     public async Task<GetByIdQueryResult> Handle(GetByIdQuery request, CancellationToken cancellationToken)
     {
-        var result =await _questionRepository.GetAsync(request.Id).ConfigureAwait(false);
+        var result = await _questionRepository.GetByIdWithExampleAsync(request.Id)
+            .ConfigureAwait(false);
 
         if (result is null)
         {
@@ -25,9 +28,20 @@ public class GetByIdQueryHandler : IRequestHandler<GetByIdQuery, GetByIdQueryRes
         return new()
         {
             Id = result.Id,
+            Title = result.Title,
             Description = result.Description,
             Difficult = result.Difficulty,
-            Example = result.Example,
+            Examples = result.Examples.Any() ? result.Examples.Select(MapExampleToEntity).ToArray() : null
+        };
+    }
+    
+    private static ExampleResult MapExampleToEntity(QuestionExample example)
+    {
+        return new()
+        {
+            Id = example.Id,
+            Input = example.Input,
+            Output = example.Output
         };
     }
 }

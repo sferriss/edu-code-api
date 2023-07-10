@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Edu.Code.Application.Commads.Compilation;
+namespace Edu.Code.Application.Commands.Compilation;
 
 public class CompileCodeCommandValidator : AbstractValidator<CompileCodeCommand>
 {

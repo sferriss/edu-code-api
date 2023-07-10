@@ -4,7 +4,7 @@ using Edu.Code.Domain.Questions.Entities;
 using Edu.Code.Domain.Questions.Repositories;
 using MediatR;
 
-namespace Edu.Code.Application.Commads.Questions.Create;
+namespace Edu.Code.Application.Commands.Questions.Create;
 
 public class CreateQuestionCommandHandler : IRequestHandler<CreateQuestionCommand, CreateQuestionCommandResult>
 {
@@ -40,14 +40,29 @@ public class CreateQuestionCommandHandler : IRequestHandler<CreateQuestionComman
         };
     }
 
-    private static Question MapToEntity(QuestionData question)
+    private static Question MapToEntity(QuestionData questionData)
+    {
+        var question =  new Question
+        {
+            Title = questionData.Title,
+            Description = questionData.Description,
+            Difficulty = questionData.Difficulty,
+        };
+        
+        if (questionData.Examples != null && questionData.Examples.Any())
+        {
+            question.AddExample(questionData.Examples.Select(MapExampleToEntity));
+        }
+
+        return question;
+    }
+    
+    private static QuestionExample MapExampleToEntity(ExampleData example)
     {
         return new()
         {
-            Answer = question.Answer,
-            Description = question.Description,
-            Difficulty = question.Difficulty,
-            Example = question.Example,
+            Input = example.Input,
+            Output = example.Output
         };
     }
 }

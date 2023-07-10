@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using Edu.Code.Application.Commads.Questions.CreateQuestionList;
+using Edu.Code.Application.Commands.Questions.CreateQuestionList;
 using Edu.Code.Database.Abstractions;
 using Edu.Code.Database.Contexts;
 using Edu.Code.Database.Repositories.Questions;

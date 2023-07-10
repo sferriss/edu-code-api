@@ -9,15 +9,20 @@ public class Question : IEntity
     
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-    public string Description { get; set; } = null!;
+    public string Title { get; set; } = null!;
 
-    public string? Answer { get; set; }
-    
-    public string? Example { get; set; }
+    public string Description { get; set; } = null!;
 
     public QuestionDifficulty Difficulty { get; set; }
 
     public Guid ListId { get; set; }
 
     public QuestionList List { get; set; } = null!;
+    
+    public List<QuestionExample> Examples = new();
+
+    public void AddExample(IEnumerable<QuestionExample> examples)
+    {
+        Examples.AddRange(examples);
+    }
 }
