@@ -1,8 +1,10 @@
 ﻿using Edu.Code.Application.Exceptions;
+using Edu.Code.Database.Abstractions;
 using Edu.Code.Domain.Questions.Entities;
 using Edu.Code.Domain.Questions.Repositories;
 using Edu.Code.External.Client;
 using Edu.Code.External.Client.Requests.OpenAI;
+using Edu.Code.External.Client.Responses.OpenAI;
 using MediatR;
 
 namespace Edu.Code.Application.Commands.Doubts;
@@ -11,15 +13,18 @@ public class SendStudentDoubtCommandHandler : IRequestHandler<SendStudentDoubtCo
 {
     private readonly OpenAiApiClient _openAiApi;
     private readonly IQuestionRepository _questionRepository;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly bool _isSaveDoubt;
 
-    public SendStudentDoubtCommandHandler(OpenAiApiClient openAiApi, IQuestionRepository questionRepository)
+    public SendStudentDoubtCommandHandler(OpenAiApiClient openAiApi, IQuestionRepository questionRepository, IUnitOfWork unitOfWork)
     {
         _openAiApi = openAiApi;
         _questionRepository = questionRepository;
+        _unitOfWork = unitOfWork;
+        _isSaveDoubt = Convert.ToBoolean(Environment.GetEnvironmentVariable("OPENAI__SAVEDOUBT"));
     }
 
-    public async Task<SendStudentDoubtCommandResult> Handle(SendStudentDoubtCommand command,
-        CancellationToken cancellationToken)
+    public async Task<SendStudentDoubtCommandResult> Handle(SendStudentDoubtCommand command, CancellationToken cancellationToken)
     {
         var question = await _questionRepository.GetByIdWithExampleAsync(command.QuestionId)
             .ConfigureAwait(false);
@@ -43,10 +48,31 @@ public class SendStudentDoubtCommandHandler : IRequestHandler<SendStudentDoubtCo
             throw new InvalidOperationException();
         }
 
+        await SaveDoubtAsync(question, result, command)
+            .ConfigureAwait(false);
+
         return new()
         {
             Message = result.Choices.First().Message.Content
         };
+    }
+
+    private async Task SaveDoubtAsync(Question question, GptConversationResponse result, SendStudentDoubtCommand command)
+    {
+        if (_isSaveDoubt)
+        {
+            question.AddDoubt(new ()
+            {
+                Doubt = command.Doubt,
+                Code = command.Code,
+                Answer = result.Choices.First().Message.Content
+            });
+
+            _questionRepository.Update(question);
+            
+            await _unitOfWork.CommitAsync()
+                .ConfigureAwait(false);
+        }
     }
 
     private static RoleContent BuildUserMessage(SendStudentDoubtCommand command, Question question)

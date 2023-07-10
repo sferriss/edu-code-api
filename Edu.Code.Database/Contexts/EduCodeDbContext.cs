@@ -1,5 +1,6 @@
 ﻿using Edu.Code.Database.Abstractions;
 using Edu.Code.Database.Mappings.Questions;
+using Edu.Code.Database.Mappings.StudentsDoubts;
 using Microsoft.EntityFrameworkCore;
 
 namespace Edu.Code.Database.Contexts;
@@ -26,5 +27,6 @@ public class EduCodeDbContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new QuestionListMapping(defaultSchema));
         modelBuilder.ApplyConfiguration(new QuestionMapping(defaultSchema));
         modelBuilder.ApplyConfiguration(new QuestionExampleMapping(defaultSchema));
+        modelBuilder.ApplyConfiguration(new StudentDoubtMapping(defaultSchema));
     }
 }

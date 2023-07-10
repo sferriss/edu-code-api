@@ -23,7 +23,7 @@ public class CompileCodeCommandHandler : IRequestHandler<CompileCodeCommand, Com
 
         return new()
         {
-            Output = result.Output
+            Output = result!.Output
         };
     }
 }
