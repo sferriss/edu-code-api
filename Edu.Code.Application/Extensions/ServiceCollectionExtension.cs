@@ -24,6 +24,7 @@ public static class ServiceCollectionExtension
         services.AddDatabase(connectionString);
         services.AddRepositories();
         services.AddCompilerApi();
+        services.AddOpenAiApi();
     }
     
     private static void AddDatabase(this IServiceCollection services, string connectionString)

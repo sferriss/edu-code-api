@@ -16,8 +16,6 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddEduCodeApi(Environment.GetEnvironmentVariable("CONNECTIONSTRINGS__EDUCODE")!);
         
         RegisterExceptionHandlers(builder.Services);
-        
-        builder.Services.AddOpenAiApi();
     }
     
     public static ExceptionHandlerFactory AddExceptionHandlers(this IServiceCollection services)

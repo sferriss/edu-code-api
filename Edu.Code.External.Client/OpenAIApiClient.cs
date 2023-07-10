@@ -2,7 +2,7 @@
 using System.Net.Mime;
 using Edu.Code.External.Client.Apis;
 
-namespace Edu.Code.External.Client.Settings;
+namespace Edu.Code.External.Client;
 
 public class OpenAiApiClient
 {
