@@ -1,7 +1,7 @@
-﻿using Edu.Code.Application.Commads.Common.Validators;
+﻿using Edu.Code.Application.Commands.Common.Validators;
 using FluentValidation;
 
-namespace Edu.Code.Application.Commads.Questions.CreateQuestionList;
+namespace Edu.Code.Application.Commands.Questions.CreateQuestionList;
 
 public class CreateQuestionListCommandValidator : AbstractValidator<CreateQuestionListCommand>
 {

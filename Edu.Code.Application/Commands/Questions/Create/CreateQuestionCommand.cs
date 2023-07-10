@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Edu.Code.Application.Commads.Questions.Create;
+namespace Edu.Code.Application.Commands.Questions.Create;
 
 public class CreateQuestionCommand : IRequest<CreateQuestionCommandResult>
 {

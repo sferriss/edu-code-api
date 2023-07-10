@@ -3,7 +3,7 @@ using Edu.Code.Domain.Questions.Entities;
 using Edu.Code.Domain.Questions.Repositories;
 using MediatR;
 
-namespace Edu.Code.Application.Commads.Questions.CreateQuestionList;
+namespace Edu.Code.Application.Commands.Questions.CreateQuestionList;
 
 public class CreateQuestionListCommandHandler : IRequestHandler<CreateQuestionListCommand, CreateQuestionListCommandResult>
 {
@@ -39,12 +39,27 @@ public class CreateQuestionListCommandHandler : IRequestHandler<CreateQuestionLi
 
     private static Question MapQuestionToEntity(QuestionData questionData)
     {
-        return new()
+        var question = new Question
         {
-            Answer = questionData.Answer,
+            Title = questionData.Title,
             Description = questionData.Description,
             Difficulty = questionData.Difficulty,
-            Example = questionData.Example
+        };
+
+        if (questionData.Examples != null && questionData.Examples.Any())
+        {
+            question.AddExample(questionData.Examples.Select(MapExampleToEntity));
+        }
+
+        return question;
+    }
+
+    private static QuestionExample MapExampleToEntity(ExampleData example)
+    {
+        return new()
+        {
+            Input = example.Input,
+            Output = example.Output
         };
     }
 }

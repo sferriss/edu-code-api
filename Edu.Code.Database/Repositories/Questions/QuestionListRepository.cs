@@ -20,6 +20,7 @@ public class QuestionListRepository : RepositoryBase<QuestionList>, IQuestionLis
             GetQuery()
                 .AsNoTracking()
                 .Include(_ => _.Questions)
+                    .ThenInclude(_ => _.Examples)
                 .OrderBy(_ => _.CreatedAt)
                 .ToPaginateAsync(pageSize, pageNumber);
     }

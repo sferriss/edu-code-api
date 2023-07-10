@@ -1,4 +1,4 @@
-﻿namespace Edu.Code.Application.Commads.Doubts;
+﻿namespace Edu.Code.Application.Commands.Doubts;
 
 public class SendStudentDoubtCommandResult
 {

@@ -25,5 +25,6 @@ public class EduCodeDbContext : DbContext, IUnitOfWork
         
         modelBuilder.ApplyConfiguration(new QuestionListMapping(defaultSchema));
         modelBuilder.ApplyConfiguration(new QuestionMapping(defaultSchema));
+        modelBuilder.ApplyConfiguration(new QuestionExampleMapping(defaultSchema));
     }
 }

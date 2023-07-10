@@ -1,6 +1,6 @@
 ﻿using Edu.Code.Api.ExceptionHandlers.Responses;
-using Edu.Code.Application.Commads.Compilation;
-using Edu.Code.Application.Commads.Doubts;
+using Edu.Code.Application.Commands.Compilation;
+using Edu.Code.Application.Commands.Doubts;
 using Edu.Code.Application.Queries.Lists.GetAll;
 using Edu.Code.Application.Queries.Questions.GetAll;
 using Edu.Code.Application.Queries.Questions.GetById;

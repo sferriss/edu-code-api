@@ -1,6 +1,6 @@
 using Edu.Code.Api.ExceptionHandlers.Responses;
-using Edu.Code.Application.Commads.Questions.Create;
-using Edu.Code.Application.Commads.Questions.CreateQuestionList;
+using Edu.Code.Application.Commands.Questions.Create;
+using Edu.Code.Application.Commands.Questions.CreateQuestionList;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Edu.Code.Application.Commads.Doubts;
+namespace Edu.Code.Application.Commands.Doubts;
 
 public class SendStudentDoubtCommand : IRequest<SendStudentDoubtCommandResult>
 {

@@ -1,7 +1,7 @@
 ﻿using Edu.Code.External.Client;
 using MediatR;
 
-namespace Edu.Code.Application.Commads.Compilation;
+namespace Edu.Code.Application.Commands.Compilation;
 
 public class CompileCodeCommandHandler : IRequestHandler<CompileCodeCommand, CompileCodeCommandResult>
 {

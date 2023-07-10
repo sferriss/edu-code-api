@@ -1,4 +1,4 @@
-﻿namespace Edu.Code.Application.Commads.Questions.CreateQuestionList;
+﻿namespace Edu.Code.Application.Commands.Questions.CreateQuestionList;
 
 public class CreateQuestionListCommandResult
 {
