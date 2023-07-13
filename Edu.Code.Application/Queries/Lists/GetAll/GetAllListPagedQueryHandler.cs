@@ -1,4 +1,5 @@
-﻿using Edu.Code.Domain.Abstractions.Pagination;
+﻿using Edu.Code.Application.Queries.Lists.Common;
+using Edu.Code.Domain.Abstractions.Pagination;
 using Edu.Code.Domain.Questions.Entities;
 using Edu.Code.Domain.Questions.Repositories;
 using MediatR;
@@ -34,8 +35,19 @@ public class GetAllListPagedQueryHandler : IRequestHandler<GetAllListPagedQuery,
         {
             Id = list.Id,
             Title = list.Title,
+            Questions = list.Questions.Select(MapQuestionResult).ToArray(),
             QuestionTotal = list.Questions.Count,
             CreatedAt = list.CreatedAt
+        };
+    }
+
+    private static QuestionResult MapQuestionResult(Question question)
+    {
+        return new()
+        {
+            Id = question.Id,
+            Title = question.Title,
+            Difficulty = question.Difficulty
         };
     }
 }

@@ -47,7 +47,7 @@ public class StudentsController : ControllerBase
     }
     
     [HttpGet("questions/list")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetAllListPagedQueryResult))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedResult<GetAllListPagedQueryResult>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionResponse))]
     public async Task<IActionResult> GetAllListsAsync([FromQuery] GetAllListPagedQuery query)

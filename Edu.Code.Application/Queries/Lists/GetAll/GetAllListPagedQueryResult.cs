@@ -1,4 +1,6 @@
-﻿namespace Edu.Code.Application.Queries.Lists.GetAll;
+﻿using Edu.Code.Application.Queries.Lists.Common;
+
+namespace Edu.Code.Application.Queries.Lists.GetAll;
 
 public class GetAllListPagedQueryResult
 {
@@ -9,4 +11,6 @@ public class GetAllListPagedQueryResult
     public int QuestionTotal { get; set; }
 
     public DateTime CreatedAt { get; set; }
+
+    public QuestionResult[]? Questions { get; set; } 
 }
