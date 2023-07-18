@@ -38,7 +38,6 @@ public class SendStudentDoubtCommandHandler : IRequestHandler<SendStudentDoubtCo
         {
             Messages = new[]
             {
-                BuildDefaultMessage(),
                 BuildUserMessage(command, question),
             }
         });
@@ -80,21 +79,21 @@ public class SendStudentDoubtCommandHandler : IRequestHandler<SendStudentDoubtCo
         return new ()
         {
             Role = "user",
-            Content = $"{FormatExercise(question.Description)}\n" +
-                      $"{FormatExamples(question.Examples)}" +
+            Content = $"{FormatInstruction()}\n" +
+                      $"{FormatExercise(question.Description)}\n" +
                       $"{FormatDoubt(command)}\n" +
-                      $"{FormatCode(command)}"
+                      $"{FormatCode(command)}\n" 
         };
     }
 
     private static string FormatDoubt(SendStudentDoubtCommand command)
     {
-        return $"{command.Doubt}";
+        return $"Dúvida do aluno: {command.Doubt}";
     }
 
     private static string FormatExercise(string description)
     {
-        return $"Exercício: ${description}\n";
+        return $"Exercício: {description}\n";
     }
 
     private static string FormatExamples(List<QuestionExample>? examples)
@@ -118,12 +117,17 @@ public class SendStudentDoubtCommandHandler : IRequestHandler<SendStudentDoubtCo
 
     private static string FormatCode(SendStudentDoubtCommand command)
     {
-        return string.IsNullOrEmpty(command.Code) ? string.Empty : $"Código: ${command.Code}";
+        return string.IsNullOrEmpty(command.Code) ? string.Empty : $"Código do aluno: ${command.Code}";
     }
     
     private static string FormatLasMessage(string? message)
     {
         return string.IsNullOrEmpty(message) ? string.Empty : $"Última orientação recebida: ${message}";
+    }
+    
+    private static string FormatInstruction()
+    {
+        return "Como responder: Como tutor de programação Java, com respostas não muito longas e NUNCA envie o código da resposta.";
     }
 
     private static RoleContent BuildDefaultMessage()
@@ -131,8 +135,7 @@ public class SendStudentDoubtCommandHandler : IRequestHandler<SendStudentDoubtCo
         return new()
         {
             Role = "system",
-            Content =
-                "Responda como tutor de programação Java, seja direto e nunca envie a resposta completa"
+            Content = "Responda como tutor de programação Java, com respostas não muito longas, e NUNCA envie o código da resposta"
         };
     }
 }
