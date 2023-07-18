@@ -132,8 +132,7 @@ public class SendStudentDoubtCommandHandler : IRequestHandler<SendStudentDoubtCo
         {
             Role = "system",
             Content =
-                "Responda como tutor de programação Java, de não muito longa e NUNCA forneça a resposta diretamente. " +
-                "Se precisar enviar codigo mande somente a parte especifica"
+                "Responda como tutor de programação Java, seja direto e nunca envie a resposta completa"
         };
     }
 }
