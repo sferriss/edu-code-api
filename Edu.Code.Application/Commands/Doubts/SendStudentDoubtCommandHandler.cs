@@ -117,7 +117,7 @@ public class SendStudentDoubtCommandHandler : IRequestHandler<SendStudentDoubtCo
 
     private static string FormatCode(SendStudentDoubtCommand command)
     {
-        return string.IsNullOrEmpty(command.Code) ? string.Empty : $"Código do aluno: ${command.Code}";
+        return string.IsNullOrEmpty(command.Code) ? string.Empty : $"Código do aluno: {command.Code}";
     }
     
     private static string FormatLasMessage(string? message)
