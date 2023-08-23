@@ -4,7 +4,7 @@ namespace Edu.Code.Application.Commands.Questions.Create;
 
 public class CreateQuestionCommand : IRequest<CreateQuestionCommandResult>
 {
-    internal Guid ListId { get; set; }
+    internal Guid ListId { get; private set; }
 
     public QuestionData[] Questions { get; set; } = null!;
 

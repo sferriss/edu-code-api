@@ -1,6 +1,4 @@
 ﻿using Edu.Code.Api.ExceptionHandlers.Responses;
-using Edu.Code.Application.Commands.Compilation;
-using Edu.Code.Application.Commands.Doubts;
 using Edu.Code.Application.Queries.Lists.GetAll;
 using Edu.Code.Application.Queries.Questions.GetAll;
 using Edu.Code.Application.Queries.Questions.GetById;
@@ -11,17 +9,17 @@ using Microsoft.AspNetCore.Mvc;
 namespace Edu.Code.Api.Controllers;
 
 [ApiController]
-[Route("students")]
-public class StudentsController : ControllerBase
+[Route("questions")]
+public class QuestionsController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public StudentsController(IMediator mediator)
+    public QuestionsController(IMediator mediator)
     {
         _mediator = mediator;
     }
     
-    [HttpGet("questions-all/{listId:guid:required}")]
+    [HttpGet("all/{listId:guid:required}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedResult<GetAllPagedQueryResult>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionResponse))]
@@ -33,12 +31,12 @@ public class StudentsController : ControllerBase
         return Ok(result);
     }
     
-    [HttpGet("questions/{id:guid:required}")]
+    [HttpGet("{id:guid:required}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetByIdQueryResult))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ExceptionResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionResponse))]
-    public async Task<IActionResult> GetAllQuestionsAsync([FromRoute] Guid id)
+    public async Task<IActionResult> GetQuestionByIdAsync([FromRoute] Guid id)
     {
         var result = await _mediator.Send(new GetByIdQuery { Id = id })
             .ConfigureAwait(false);
@@ -46,7 +44,7 @@ public class StudentsController : ControllerBase
         return Ok(result);
     }
     
-    [HttpGet("questions/list")]
+    [HttpGet("lists")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedResult<GetAllListPagedQueryResult>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionResponse))]
@@ -55,30 +53,6 @@ public class StudentsController : ControllerBase
         var result = await _mediator.Send(query)
             .ConfigureAwait(false);
 
-        return Ok(result);
-    }
-
-    [HttpPost("compile")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CompileCodeCommandResult))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionResponse))]
-    public async Task<IActionResult> PostCompileAsync([FromBody] CompileCodeCommand request)
-    {
-        var result = await _mediator.Send(request)
-            .ConfigureAwait(false);
-        
-        return Ok(result);
-    }
-    
-    [HttpPost("doubt/{id:guid:required}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SendStudentDoubtCommandResult))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionResponse))]
-    public async Task<IActionResult> PostStudentDoubtAsync([FromRoute] Guid id, [FromBody] SendStudentDoubtCommand request)
-    {
-        var result = await _mediator.Send(request.WithQuestionId(id))
-            .ConfigureAwait(false);
-        
         return Ok(result);
     }
 }

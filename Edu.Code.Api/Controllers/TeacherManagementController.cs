@@ -1,4 +1,5 @@
 using Edu.Code.Api.ExceptionHandlers.Responses;
+using Edu.Code.Application.Commands.Modules.Create;
 using Edu.Code.Application.Commands.Questions.Create;
 using Edu.Code.Application.Commands.Questions.CreateQuestionList;
 using MediatR;
@@ -40,6 +41,19 @@ public class TeacherManagementController : ControllerBase
         [FromBody] CreateQuestionCommand request)
     {
         var result = await _mediator.Send(request.WithListId(listId))
+            .ConfigureAwait(false);
+
+        return Created(string.Empty, result);
+    }
+    
+    [HttpPost("create-module")]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Guid))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ExceptionResponse))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionResponse))]
+    public async Task<IActionResult> PostCreateModuleAsync([FromBody] CreateModuleCommand request)
+    {
+        var result = await _mediator.Send(request)
             .ConfigureAwait(false);
 
         return Created(string.Empty, result);

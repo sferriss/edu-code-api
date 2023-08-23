@@ -1,8 +1,11 @@
 ﻿using System.Reflection;
+using Edu.Code.Application.Mappers.Modules;
 using Edu.Code.Application.Commands.Questions.CreateQuestionList;
 using Edu.Code.Database.Abstractions;
 using Edu.Code.Database.Contexts;
+using Edu.Code.Database.Repositories.Modules;
 using Edu.Code.Database.Repositories.Questions;
+using Edu.Code.Domain.Modules.Repositories;
 using Edu.Code.Domain.Questions.Repositories;
 using Edu.Code.External.Client.Extensions;
 using FluentValidation;
@@ -25,6 +28,7 @@ public static class ServiceCollectionExtension
         services.AddRepositories();
         services.AddCompilerApi();
         services.AddOpenAiApi();
+        services.AddMappers();
     }
     
     private static void AddDatabase(this IServiceCollection services, string connectionString)
@@ -41,5 +45,12 @@ public static class ServiceCollectionExtension
     {
         services.AddTransient<IQuestionListRepository, QuestionListRepository>();
         services.AddTransient<IQuestionRepository, QuestionRepository>();
+        services.AddTransient<IModuleRepository, ModuleRepository>();
+        services.AddTransient<IModuleContentRepository, ModuleContentRepository>();
+    }
+    
+    private static void AddMappers(this IServiceCollection services)
+    {
+        services.AddTransient<ModuleMapper>();
     }
 }

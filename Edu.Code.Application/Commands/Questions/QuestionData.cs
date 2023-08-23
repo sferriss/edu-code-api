@@ -2,13 +2,13 @@
 
 namespace Edu.Code.Application.Commands.Questions;
 
-public class QuestionData
+public record QuestionData
 {
-    public string Title { get; set; } = null!;
+    public string Title { get; init; } = null!;
     
-    public string Description { get; set; } = null!;
+    public string Description { get; init; } = null!;
 
-    public ExampleData[]? Examples { get; set; }
+    public ExampleData[]? Examples { get; init; }
 
-    public QuestionDifficulty Difficulty { get; set; }
+    public QuestionDifficulty Difficulty { get; init; }
 }

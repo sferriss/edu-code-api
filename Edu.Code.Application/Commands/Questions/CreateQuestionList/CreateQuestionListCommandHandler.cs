@@ -34,7 +34,7 @@ public class CreateQuestionListCommandHandler : IRequestHandler<CreateQuestionLi
         await _unitOfWork.CommitAsync()
             .ConfigureAwait(false);
         
-        return new () { Id = list.Id};
+        return new (list.Id);
     }
 
     private static Question MapQuestionToEntity(QuestionData questionData)
