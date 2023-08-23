@@ -12,11 +12,18 @@
       <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.2" />
       <PackageReference Include="MediatR" Version="12.0.1" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+      <PackageReference Include="Riok.Mapperly" Version="3.1.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Edu.Code.Database\Edu.Code.Database.csproj" />
       <ProjectReference Include="..\Edu.Code.External.Client\Edu.Code.External.Client.csproj" />
+
+
+
     </ItemGroup>
+
+
+
 
 </Project>

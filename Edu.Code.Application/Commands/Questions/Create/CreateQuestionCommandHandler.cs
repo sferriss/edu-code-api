@@ -34,10 +34,7 @@ public class CreateQuestionCommandHandler : IRequestHandler<CreateQuestionComman
             .ConfigureAwait(false);
 
 
-        return new ()
-        {
-            Ids = questions.Select(_ => _.Id).ToArray()
-        };
+        return new(questions.Select(x => x.Id).ToArray());
     }
 
     private static Question MapToEntity(QuestionData questionData)

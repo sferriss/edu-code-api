@@ -1,10 +1,10 @@
 ﻿namespace Edu.Code.Application.Queries.Questions.Common;
 
-public class ExampleResult
+public record ExampleResult
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
 
-    public string Input { get; set; } = null!;
+    public string Input { get; init; } = null!;
     
-    public string Output { get; set; } = null!;
+    public string Output { get; init; } = null!;
 }
