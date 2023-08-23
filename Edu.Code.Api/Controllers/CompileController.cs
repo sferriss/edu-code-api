@@ -7,11 +7,11 @@ namespace Edu.Code.Api.Controllers;
 
 [ApiController]
 [Route("compile")]
-public class CompilationController : ControllerBase
+public class CompileController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public CompilationController(IMediator mediator)
+    public CompileController(IMediator mediator)
     {
         _mediator = mediator;
     }
