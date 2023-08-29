@@ -8,7 +8,7 @@ public class ModuleContent : IEntity
     
     public DateTime CreatedAt { get; set; }  = DateTime.UtcNow;
 
-    public string Title { get; set; } = null!;
+    public string? Title { get; set; }
     
     public string? Description { get; set; }
 

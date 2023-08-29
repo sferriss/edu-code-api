@@ -32,8 +32,7 @@ public class ModuleContentMapping : IEntityTypeConfiguration<ModuleContent>
         
         builder
             .Property(m => m.Title)
-            .HasColumnName("title")
-            .IsRequired();
+            .HasColumnName("title");
         
         builder
             .Property(m => m.Description)
