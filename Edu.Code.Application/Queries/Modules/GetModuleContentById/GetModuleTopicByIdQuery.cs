@@ -2,7 +2,7 @@
 
 namespace Edu.Code.Application.Queries.Modules.GetModuleContentById;
 
-public class GetModuleContentByIdQuery : IRequest<GetModuleContentByIdQueryResult>
+public class GetModuleTopicByIdQuery : IRequest<GetModuleTopicByIdQueryResult>
 {
     public Guid Id { get; set; }
 };

@@ -2,17 +2,15 @@
 
 namespace Edu.Code.Domain.Modules.Entities;
 
-public class ModuleContent : IEntity
+public class TopicContent : IEntity
 {
     public Guid Id { get; set; }
     
     public DateTime CreatedAt { get; set; }  = DateTime.UtcNow;
-
-    public string? Title { get; set; }
     
     public string? Description { get; set; }
+    
+    public Guid TopicId { get; set; }
 
-    public Guid ModuleId { get; set; }
-
-    public Module Module { get; set; } = null!;
+    public ModuleTopic Topic { get; set; } = null!;
 }

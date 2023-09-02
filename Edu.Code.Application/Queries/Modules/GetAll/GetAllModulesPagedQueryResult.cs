@@ -10,5 +10,5 @@ public class GetAllModulesPagedQueryResult
     
     public string? Description { get; init; }
 
-    public ModuleContentResult[]? Contents { get; init; }
+    public ModuleTopicResult[]? Topics { get; init; }
 }
