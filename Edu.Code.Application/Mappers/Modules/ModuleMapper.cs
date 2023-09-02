@@ -13,11 +13,9 @@ public partial class ModuleMapper
 {
     public partial Module ModuleToEntity(CreateModuleCommand command);
     
-    public partial ModuleContent ModuleContentToEntity(ModuleContentData data);
-    
-    public partial ModuleContentResult ModuleContentToQueryResult(ModuleContent entity);
+    public partial TopicContent ModuleContentToEntity(ModuleTopicData data);
     
     public partial GetAllModulesPagedQueryResult ModuleToQueryResult(Module entity);
-    
-    public partial GetModuleContentByIdQueryResult ModuleContentToQueryByIdResult(ModuleContent entity);
+
+    public partial GetModuleTopicByIdQueryResult ModuleTopicToResult(ModuleTopic entity);
 }

@@ -8,5 +8,5 @@ public record CreateModuleCommand : IRequest<CreateModuleCommandResult>
     
     public string? Description { get; init; }
 
-    public ModuleContentData[]? Contents { get; init; }
+    public ModuleTopicData[]? Topics { get; init; }
 }

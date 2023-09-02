@@ -4,17 +4,17 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Edu.Code.Database.Mappings.Modules;
 
-public class ModuleContentMapping : IEntityTypeConfiguration<ModuleContent>
+public class TopicContentMapping : IEntityTypeConfiguration<TopicContent>
 {
     private readonly string _schema;
     
-    public ModuleContentMapping(string schema) =>
+    public TopicContentMapping(string schema) =>
         _schema = schema;
     
-    public void Configure(EntityTypeBuilder<ModuleContent> builder)
+    public void Configure(EntityTypeBuilder<TopicContent> builder)
     {
         builder
-            .ToTable("module_content", _schema);
+            .ToTable("topic_content", _schema);
         
         builder
             .HasKey(m => m.Id);
@@ -31,22 +31,18 @@ public class ModuleContentMapping : IEntityTypeConfiguration<ModuleContent>
             .IsRequired();
         
         builder
-            .Property(m => m.Title)
-            .HasColumnName("title");
-        
-        builder
             .Property(m => m.Description)
             .HasColumnName("description");
         
         builder
-            .Property(m => m.ModuleId)
-            .HasColumnName("module_id")
+            .Property(m => m.TopicId)
+            .HasColumnName("topic_id")
             .IsRequired();
 
         builder
-            .HasOne(m => m.Module)
+            .HasOne(m => m.Topic)
             .WithMany(m => m.Contents)
-            .HasForeignKey(m => m.ModuleId)
+            .HasForeignKey(m => m.TopicId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

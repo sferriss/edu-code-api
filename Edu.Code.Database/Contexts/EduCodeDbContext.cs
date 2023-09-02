@@ -30,6 +30,7 @@ public class EduCodeDbContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new QuestionExampleMapping(defaultSchema));
         modelBuilder.ApplyConfiguration(new StudentDoubtMapping(defaultSchema));
         modelBuilder.ApplyConfiguration(new ModuleMapping(defaultSchema));
-        modelBuilder.ApplyConfiguration(new ModuleContentMapping(defaultSchema));
+        modelBuilder.ApplyConfiguration(new TopicContentMapping(defaultSchema));
+        modelBuilder.ApplyConfiguration(new ModuleTopicMapping(defaultSchema));
     }
 }

@@ -30,12 +30,12 @@ public class ModulesController : ControllerBase
     }
     
     [HttpGet("content/{id:guid:required}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetModuleContentByIdQueryResult))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetModuleTopicByIdQueryResult))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionResponse))]
     public async Task<IActionResult> GetContentByIdAsync([FromRoute] Guid id)
     {
-        var result = await _mediator.Send(new GetModuleContentByIdQuery
+        var result = await _mediator.Send(new GetModuleTopicByIdQuery
             {
                 Id = id,
             }).ConfigureAwait(false);

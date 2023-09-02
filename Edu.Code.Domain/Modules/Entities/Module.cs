@@ -12,15 +12,15 @@ public class Module : IEntity
 
     public string? Description { get; set; }
     
-    public List<ModuleContent> Contents { get; } = new();
+    public List<ModuleTopic> Topics { get; } = new();
     
-    public void AddContent(IEnumerable<ModuleContent>? contents)
+    public void AddContent(IEnumerable<ModuleTopic>? topics)
     {
-        if (contents != null) Contents.AddRange(contents);
+        if (topics != null) Topics.AddRange(topics);
     }
     
-    public void AddContent(ModuleContent? content)
+    public void AddContent(ModuleTopic? topic)
     {
-        if (content != null) Contents.Add(content);
+        if (topic != null) Topics.Add(topic);
     }
 }

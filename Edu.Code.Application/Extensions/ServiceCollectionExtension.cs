@@ -46,7 +46,8 @@ public static class ServiceCollectionExtension
         services.AddTransient<IQuestionListRepository, QuestionListRepository>();
         services.AddTransient<IQuestionRepository, QuestionRepository>();
         services.AddTransient<IModuleRepository, ModuleRepository>();
-        services.AddTransient<IModuleContentRepository, ModuleContentRepository>();
+        services.AddTransient<ITopicContentRepository, TopicContentRepository>();
+        services.AddTransient<IModuleTopicRepository, ModuleTopicRepository>();
     }
     
     private static void AddMappers(this IServiceCollection services)

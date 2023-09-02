@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Edu.Code.Database.Repositories.Modules;
 
-public class ModuleContentRepository : RepositoryBase<ModuleContent>, IModuleContentRepository
+public class TopicContentRepository : RepositoryBase<TopicContent>, ITopicContentRepository
 {
-    public ModuleContentRepository(EduCodeDbContext context) : base(context)
+    public TopicContentRepository(EduCodeDbContext context) : base(context)
     {
     }
 
-    public Task<ModuleContent?> GetByIdAsync(Guid id)
+    public Task<TopicContent?> GetByIdAsync(Guid id)
     {
         return GetQuery()
             .FirstOrDefaultAsync(x => x.Id == id);
