@@ -1,7 +1,13 @@
-﻿using Edu.Code.Application.Exceptions;
+﻿using Edu.Code.Application.Commands.Doubts.Enums;
+using Edu.Code.Application.Exceptions;
+using Edu.Code.Application.Strategies.Doubts;
 using Edu.Code.Database.Abstractions;
+using Edu.Code.Domain.Modules.Entities;
+using Edu.Code.Domain.Modules.Repositories;
 using Edu.Code.Domain.Questions.Entities;
 using Edu.Code.Domain.Questions.Repositories;
+using Edu.Code.Domain.StudentsDoubts.Entities;
+using Edu.Code.Domain.StudentsDoubts.Repositories;
 using Edu.Code.External.Client;
 using Edu.Code.External.Client.Requests.OpenAI;
 using Edu.Code.External.Client.Responses.OpenAI;
@@ -13,32 +19,35 @@ public class SendStudentDoubtCommandHandler : IRequestHandler<SendStudentDoubtCo
 {
     private readonly OpenAiApiClient _openAiApi;
     private readonly IQuestionRepository _questionRepository;
+    private readonly ITopicContentRepository _contentRepository;
+    private readonly IStudentDoubtRepository _studentDoubtRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly bool _isSaveDoubt;
 
-    public SendStudentDoubtCommandHandler(OpenAiApiClient openAiApi, IQuestionRepository questionRepository, IUnitOfWork unitOfWork)
+    public SendStudentDoubtCommandHandler(
+        OpenAiApiClient openAiApi,
+        IQuestionRepository questionRepository,
+        IUnitOfWork unitOfWork,
+        ITopicContentRepository contentRepository,
+        IStudentDoubtRepository studentDoubtRepository)
     {
         _openAiApi = openAiApi;
         _questionRepository = questionRepository;
         _unitOfWork = unitOfWork;
+        _contentRepository = contentRepository;
+        _studentDoubtRepository = studentDoubtRepository;
         _isSaveDoubt = Convert.ToBoolean(Environment.GetEnvironmentVariable("OPENAI__SAVEDOUBT"));
     }
 
     public async Task<SendStudentDoubtCommandResult> Handle(SendStudentDoubtCommand command, CancellationToken cancellationToken)
     {
-        var question = await _questionRepository.GetByIdWithExampleAsync(command.QuestionId)
-            .ConfigureAwait(false);
-
-        if (question is null)
-        {
-            throw new NotFoundException("Exercício não encontrado.");
-        }
+        var message = await HandlerMessageAsync(command).ConfigureAwait(false);
 
         var result = await _openAiApi.OpenAiApi.PostGptConversationAsync(new()
         {
             Messages = new[]
             {
-                BuildUserMessage(command, question),
+                message,
             }
         });
 
@@ -47,7 +56,7 @@ public class SendStudentDoubtCommandHandler : IRequestHandler<SendStudentDoubtCo
             throw new InvalidOperationException();
         }
 
-        await SaveDoubtAsync(question, result, command)
+        await SaveDoubtAsync(result, command, message)
             .ConfigureAwait(false);
 
         return new()
@@ -56,86 +65,60 @@ public class SendStudentDoubtCommandHandler : IRequestHandler<SendStudentDoubtCo
         };
     }
 
-    private async Task SaveDoubtAsync(Question question, GptConversationResponse result, SendStudentDoubtCommand command)
+    private async Task<RoleContent> HandlerMessageAsync(SendStudentDoubtCommand command)
+    {
+        var handlerDoubtPrompt = HandlerDoubtPromptStrategy.GetStrategy(command.Type);
+
+        if (command.Type is DoubtType.Exercise)
+        {
+            var question = await GetQuestionAsync(command).ConfigureAwait(false);
+            return handlerDoubtPrompt.BuildPrompt(command, question.Description);
+        }
+        
+        var content = await GetContentAsync(command).ConfigureAwait(false);
+        return handlerDoubtPrompt.BuildPrompt(command, content.Description!);
+    }
+
+    private async Task<Question> GetQuestionAsync(SendStudentDoubtCommand command)
+    {
+        var question = await _questionRepository.GetByIdWithExampleAsync(command.Id)
+            .ConfigureAwait(false);
+
+        if (question is null)
+        {
+            throw new NotFoundException("Exercício não encontrado.");
+        }
+
+        return question;
+    }
+    
+    private async Task<TopicContent> GetContentAsync(SendStudentDoubtCommand command)
+    {
+        var content = await _contentRepository.GetByIdAsync(command.Id)
+            .ConfigureAwait(false);
+
+        if (content is null)
+        {
+            throw new NotFoundException("Conteúdo não encontrado.");
+        }
+
+        return content;
+    }
+
+    private async Task SaveDoubtAsync(GptConversationResponse result, SendStudentDoubtCommand command, RoleContent message)
     {
         if (_isSaveDoubt)
         {
-            question.AddDoubt(new ()
+            var doubt = new StudentDoubt 
             {
-                Doubt = command.Doubt,
-                Code = command.Code,
+                Doubt = message.Content,
                 Answer = result.Choices.First().Message.Content
-            });
+            };
 
-            _questionRepository.Update(question);
+            _studentDoubtRepository.Add(doubt);
             
             await _unitOfWork.CommitAsync()
                 .ConfigureAwait(false);
         }
-    }
-
-    private static RoleContent BuildUserMessage(SendStudentDoubtCommand command, Question question)
-    {
-        return new ()
-        {
-            Role = "user",
-            Content = $"{FormatInstruction()}\n" +
-                      $"{FormatExercise(question.Description)}\n" +
-                      $"{FormatDoubt(command)}\n" +
-                      $"{FormatCode(command)}\n" 
-        };
-    }
-
-    private static string FormatDoubt(SendStudentDoubtCommand command)
-    {
-        return $"Dúvida do aluno: {command.Doubt}";
-    }
-
-    private static string FormatExercise(string description)
-    {
-        return $"Exercício: {description}\n";
-    }
-
-    private static string FormatExamples(List<QuestionExample>? examples)
-    {
-        if (examples is null)
-        {
-            return "";
-        }
-
-        var result = "";
-
-        for (var i = 0; i < examples.Count; i++)
-        {
-            result += $"Exemplo {i + 1}:\n" +
-                      $"Input: {examples[i].Input}\n" +
-                      $"Output: {examples[i].Output}\n \n";
-        }
-
-        return result;
-    }
-
-    private static string FormatCode(SendStudentDoubtCommand command)
-    {
-        return string.IsNullOrEmpty(command.Code) ? string.Empty : $"Código do aluno: {command.Code}";
-    }
-    
-    private static string FormatLasMessage(string? message)
-    {
-        return string.IsNullOrEmpty(message) ? string.Empty : $"Última orientação recebida: ${message}";
-    }
-    
-    private static string FormatInstruction()
-    {
-        return "Como responder: Como tutor de programação Java, com respostas não muito longas e NUNCA envie o código da resposta.";
-    }
-
-    private static RoleContent BuildDefaultMessage()
-    {
-        return new()
-        {
-            Role = "system",
-            Content = "Responda como tutor de programação Java, com respostas não muito longas, e NUNCA envie o código da resposta"
-        };
     }
 }

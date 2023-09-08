@@ -17,41 +17,27 @@ public class StudentDoubtMapping : IEntityTypeConfiguration<StudentDoubt>
             .ToTable("student_doubt", _schema);
         
         builder
-            .HasKey(_ => _.Id);
+            .HasKey(x => x.Id);
 
         builder
-            .Property(_ => _.Id)
+            .Property(x => x.Id)
             .HasColumnName("id")
             .IsRequired()
             .HasDefaultValueSql("uuid_generate_v4()");
         
         builder
-            .Property(_ => _.CreatedAt)
+            .Property(x => x.CreatedAt)
             .HasColumnName("created_at")
             .IsRequired();
         
         builder
-            .Property(_ => _.Doubt)
+            .Property(x => x.Doubt)
             .HasColumnName("doubt")
             .IsRequired();
         
         builder
-            .Property(_ => _.Code)
-            .HasColumnName("code");
-        
-        builder
-            .Property(_ => _.Answer)
+            .Property(x => x.Answer)
             .HasColumnName("answer")
             .IsRequired();
-        
-        builder
-            .Property(_ => _.QuestionId)
-            .HasColumnName("question_id");
-        
-        builder
-            .HasOne(_ => _.Question)
-            .WithMany(_ => _.Doubts)
-            .HasForeignKey(_ => _.QuestionId)
-            .OnDelete(DeleteBehavior.Cascade);
     }
 }

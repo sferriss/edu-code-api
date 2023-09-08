@@ -5,8 +5,10 @@ using Edu.Code.Database.Abstractions;
 using Edu.Code.Database.Contexts;
 using Edu.Code.Database.Repositories.Modules;
 using Edu.Code.Database.Repositories.Questions;
+using Edu.Code.Database.Repositories.StudentDoubt;
 using Edu.Code.Domain.Modules.Repositories;
 using Edu.Code.Domain.Questions.Repositories;
+using Edu.Code.Domain.StudentsDoubts.Repositories;
 using Edu.Code.External.Client.Extensions;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -48,6 +50,7 @@ public static class ServiceCollectionExtension
         services.AddTransient<IModuleRepository, ModuleRepository>();
         services.AddTransient<ITopicContentRepository, TopicContentRepository>();
         services.AddTransient<IModuleTopicRepository, ModuleTopicRepository>();
+        services.AddTransient<IStudentDoubtRepository, StudentDoubtRepository>();
     }
     
     private static void AddMappers(this IServiceCollection services)

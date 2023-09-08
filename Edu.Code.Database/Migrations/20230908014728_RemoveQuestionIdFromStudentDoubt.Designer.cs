@@ -3,6 +3,7 @@ using System;
 using Edu.Code.Database.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Edu.Code.Database.Migrations
 {
     [DbContext(typeof(EduCodeDbContext))]
-    partial class EduCodeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230908014728_RemoveQuestionIdFromStudentDoubt")]
+    partial class RemoveQuestionIdFromStudentDoubt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -212,6 +215,10 @@ namespace Edu.Code.Database.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("answer");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("text")
+                        .HasColumnName("code");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
