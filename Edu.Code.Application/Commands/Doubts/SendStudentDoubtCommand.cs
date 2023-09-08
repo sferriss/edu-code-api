@@ -1,20 +1,21 @@
-﻿using MediatR;
+﻿using Edu.Code.Application.Commands.Doubts.Enums;
+using MediatR;
 
 namespace Edu.Code.Application.Commands.Doubts;
 
 public class SendStudentDoubtCommand : IRequest<SendStudentDoubtCommandResult>
 {
-    internal Guid QuestionId { get; set; }
+    internal Guid Id { get; private set; }
     
     public string? Code { get; set; }
 
     public string Doubt { get; set; } = null!;
 
-    public string? LastMessage { get; set; }
+    public DoubtType Type { get; set; }
 
     public SendStudentDoubtCommand WithQuestionId(Guid id)
     {
-        QuestionId = id;
+        Id = id;
 
         return this;
     }

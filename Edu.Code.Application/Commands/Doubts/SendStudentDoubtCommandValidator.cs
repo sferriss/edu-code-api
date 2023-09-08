@@ -6,6 +6,10 @@ public class SendStudentDoubtCommandValidator : AbstractValidator<SendStudentDou
 {
     public SendStudentDoubtCommandValidator()
     {
+        RuleFor(x => x.Type)
+            .NotNull()
+            .IsInEnum();
+        
         RuleFor(x => x.Doubt)
             .NotEmpty()
             .MaximumLength(200);
