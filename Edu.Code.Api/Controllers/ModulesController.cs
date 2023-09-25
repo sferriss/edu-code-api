@@ -21,7 +21,7 @@ public class ModulesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetAllModulesPagedQueryResult))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionResponse))]
-    public async Task<IActionResult> PostDoubtAsync([FromQuery] GetAllModulesPagedQuery request)
+    public async Task<IActionResult> GetAllModulesAsync([FromQuery] GetAllModulesPagedQuery request)
     {
         var result = await _mediator.Send(request)
             .ConfigureAwait(false);
