@@ -15,7 +15,8 @@ public class ModuleTopicRepository : RepositoryBase<ModuleTopic>, IModuleTopicRe
     public Task<ModuleTopic?> GetByIdAsync(Guid id)
     {
         return GetQuery()
-            .Include(x => x.Contents)
+            .Include(x => x.Contents
+                .OrderBy(y => y.CreatedAt))
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 }
