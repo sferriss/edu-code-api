@@ -19,7 +19,8 @@ public class ModuleRepository : RepositoryBase<Module>, IModuleRepository
         return
             GetQuery()
                 .AsNoTracking()
-                .Include(x => x.Topics)
+                .Include(x => x.Topics
+                    .OrderBy(y => y.CreatedAt))
                 .OrderBy(x => x.Title)
                 .ToPaginateAsync(pageSize, pageNumber);
     }
