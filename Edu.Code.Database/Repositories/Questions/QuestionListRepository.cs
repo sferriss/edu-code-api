@@ -19,9 +19,10 @@ public class QuestionListRepository : RepositoryBase<QuestionList>, IQuestionLis
         return
             GetQuery()
                 .AsNoTracking()
-                .Include(_ => _.Questions)
-                    .ThenInclude(_ => _.Examples)
-                .OrderBy(_ => _.CreatedAt)
+                .Include(x => x.Questions
+                        .OrderBy(y => y.CreatedAt))
+                    .ThenInclude(x => x.Examples)
+                .OrderBy(x => x.CreatedAt)
                 .ToPaginateAsync(pageSize, pageNumber);
     }
 }
