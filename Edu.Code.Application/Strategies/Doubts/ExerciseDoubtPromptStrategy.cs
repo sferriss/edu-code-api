@@ -10,10 +10,10 @@ public class ExerciseDoubtPromptStrategy : IDoubtPromptStrategy
         return new ()
         {
             Role = "user",
-            Content = $"{FormatExercise(description)}\n" +
+            Content = $"{FormatInstruction()}\n" + 
+                      $"{FormatExercise(description)}\n" +
                       $"{FormatDoubt(command)}\n" +
-                      $"{FormatCode(command)}\n" +
-                      $"{FormatInstruction()}\n"
+                      $"{FormatCode(command)}\n"
         };
     }
     
