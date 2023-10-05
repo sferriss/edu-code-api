@@ -13,13 +13,13 @@ public class ExerciseDoubtPromptStrategy : IDoubtPromptStrategy
             Content = $"{FormatExercise(description)}\n" +
                       $"{FormatDoubt(command)}\n" +
                       $"{FormatCode(command)}\n" +
-                      $"{FormatInstruction()}\n" 
+                      $"{FormatInstruction()}\n"
         };
     }
     
     private static string FormatInstruction()
     {
-        return "Como responder: Forneça orientações e dicas para ajudar o aluno a entender e corrigir o problema, mas não forneça a solução completa.";
+        return "Como responder: Como tutor de programação Java, com respostas diretas e NUNCA envie o código fonte da resposta.";
     }
     
     private static string FormatExercise(string description)
