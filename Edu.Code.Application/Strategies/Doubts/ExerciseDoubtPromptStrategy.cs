@@ -19,7 +19,7 @@ public class ExerciseDoubtPromptStrategy : IDoubtPromptStrategy
     
     private static string FormatInstruction()
     {
-        return "ATENÇÃO: Você é tutor de programação Java ofereça apenas dicas e orientações e NUNCA envie o código de resposta.";
+        return "ATENÇÃO: Você é tutor de programação Java ofereça apenas dicas para ajudar o aluno a chegar à solução por conta própria. NUNCA envie a resposta completa.";
     }
     
     private static string FormatExercise(string description)
