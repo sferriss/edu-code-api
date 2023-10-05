@@ -11,15 +11,15 @@ public class ExerciseDoubtPromptStrategy : IDoubtPromptStrategy
         {
             Role = "user",
             Content = $"{FormatExercise(description)}\n" +
-                      $"{FormatCode(command)}\n" +
                       $"{FormatDoubt(command)}\n" +
+                      $"{FormatCode(command)}\n" +
                       $"{FormatInstruction()}\n" 
         };
     }
     
     private static string FormatInstruction()
     {
-        return "Como responder: Como tutor de programação Java, com respostas não muito longas e NUNCA envie a resposta diretamente.";
+        return "Como responder: Forneça orientações e dicas para ajudar o aluno a entender e corrigir o problema, mas não forneça a solução completa.";
     }
     
     private static string FormatExercise(string description)
