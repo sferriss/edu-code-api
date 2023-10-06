@@ -23,7 +23,7 @@ public class OpenAiApi
         const string url = "v1/chat/completions";
 
         conversationRequest.Model = _model;
-        conversationRequest.Temperature = 0.2;
+        conversationRequest.Temperature = 0.4;
         conversationRequest.MaxToken = _maxtoken;
         
 
