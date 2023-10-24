@@ -1,4 +1,5 @@
 ﻿using Edu.Code.Domain.Abstractions;
+using Edu.Code.Domain.StudentsDoubts.Enums;
 
 namespace Edu.Code.Domain.StudentsDoubts.Entities;
 
@@ -11,4 +12,6 @@ public class StudentDoubt : IEntity
     public string Doubt { get; set; } = null!;
 
     public string Answer { get; set; } = null!;
+
+    public StudentDoubtType? Type { get; set; }
 }

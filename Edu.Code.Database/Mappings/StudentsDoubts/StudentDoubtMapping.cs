@@ -39,5 +39,9 @@ public class StudentDoubtMapping : IEntityTypeConfiguration<StudentDoubt>
             .Property(x => x.Answer)
             .HasColumnName("answer")
             .IsRequired();
+        
+        builder
+            .Property(x => x.Type)
+            .HasColumnName("type");
     }
 }

@@ -1,4 +1,5 @@
-﻿using Edu.Code.Application.Commands.Doubts.Enums;
+﻿using System.ComponentModel;
+using Edu.Code.Application.Commands.Doubts.Enums;
 using Edu.Code.Application.Exceptions;
 using Edu.Code.Application.Strategies.Doubts;
 using Edu.Code.Database.Abstractions;
@@ -7,6 +8,7 @@ using Edu.Code.Domain.Modules.Repositories;
 using Edu.Code.Domain.Questions.Entities;
 using Edu.Code.Domain.Questions.Repositories;
 using Edu.Code.Domain.StudentsDoubts.Entities;
+using Edu.Code.Domain.StudentsDoubts.Enums;
 using Edu.Code.Domain.StudentsDoubts.Repositories;
 using Edu.Code.External.Client;
 using Edu.Code.External.Client.Requests.OpenAI;
@@ -112,7 +114,8 @@ public class SendStudentDoubtCommandHandler : IRequestHandler<SendStudentDoubtCo
             var doubt = new StudentDoubt 
             {
                 Doubt = message.Content,
-                Answer = result.Choices.First().Message.Content
+                Answer = result.Choices.First().Message.Content,
+                Type = Converter(command.Type)
             };
 
             _studentDoubtRepository.Add(doubt);
@@ -121,4 +124,10 @@ public class SendStudentDoubtCommandHandler : IRequestHandler<SendStudentDoubtCo
                 .ConfigureAwait(false);
         }
     }
+
+    private static StudentDoubtType Converter(DoubtType type) => type switch
+    {
+        DoubtType.Content => StudentDoubtType.Content,
+        DoubtType.Exercise => StudentDoubtType.Exercise,
+    };
 }
