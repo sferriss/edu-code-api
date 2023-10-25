@@ -10,6 +10,7 @@ public static class HandlerDoubtPromptStrategy
         {
             DoubtType.Exercise => new ExerciseDoubtPromptStrategy(),
             DoubtType.Content => new ContentDoubtPromptStrategy(),
+            DoubtType.System => new SystemPromptStrategy(),
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Operação inválida")
         };
     }

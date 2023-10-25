@@ -3,5 +3,6 @@
 public enum DoubtType
 {
     Exercise,
-    Content
+    Content,
+    System
 }

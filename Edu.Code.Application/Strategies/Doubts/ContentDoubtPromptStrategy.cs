@@ -5,20 +5,20 @@ namespace Edu.Code.Application.Strategies.Doubts;
 
 public class ContentDoubtPromptStrategy : IDoubtPromptStrategy
 {
-    public RoleContent BuildPrompt(SendStudentDoubtCommand command, string description)
+    public RoleContent BuildPrompt(SendStudentDoubtCommand? command, string? description)
     {
         return new ()
         {
             Role = "user",
             Content = $"{FormatInstruction()}\n" +
-                      $"{FormatContent(description)}\n" +
-                      $"{FormatDoubt(command)}\n"
+                      $"{FormatContent(description!)}\n" +
+                      $"{FormatDoubt(command!)}\n"
         };
     }
     
     private static string FormatInstruction()
     {
-        return "Como responder: Você é um tutor de programação falando com um aluno, responda a dúvida baseado no conteúdo de referência. Não de respostas muito longas.";
+        return "Como responder: Você é um tutor de programação ajudando um aluno, responda a dúvida baseado no conteúdo de referência. Não de respostas muito longas.";
     }
     
     private static string FormatContent(string description)

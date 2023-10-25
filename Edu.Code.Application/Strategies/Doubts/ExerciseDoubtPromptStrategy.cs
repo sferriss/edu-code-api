@@ -5,21 +5,21 @@ namespace Edu.Code.Application.Strategies.Doubts;
 
 public class ExerciseDoubtPromptStrategy : IDoubtPromptStrategy
 {
-    public RoleContent BuildPrompt(SendStudentDoubtCommand command, string description)
+    public RoleContent BuildPrompt(SendStudentDoubtCommand? command, string? description)
     {
         return new ()
         {
             Role = "user",
             Content = $"{FormatInstruction()}\n" + 
-                      $"{FormatExercise(description)}\n" +
-                      $"{FormatDoubt(command)}\n" +
+                      $"{FormatExercise(description!)}\n" +
+                      $"{FormatDoubt(command!)}\n" +
                       $"{FormatCode(command)}\n"
         };
     }
     
     private static string FormatInstruction()
     {
-        return "COMO RESPONDER: Você é tutor de programação Java, ofereça dicas para ajudar o aluno. NUNCA envie código que responda completamente a questão e só responda perguntas relacionadas ao exercício";
+        return "COMO RESPONDER: Você é tutor de programação Java, ofereça dicas sem fornecer solução completa e só responda perguntas relacionadas ao exercício";
     }
     
     private static string FormatExercise(string description)

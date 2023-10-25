@@ -5,5 +5,5 @@ namespace Edu.Code.Application.Strategies.Doubts;
 
 public interface IDoubtPromptStrategy
 {
-    public RoleContent BuildPrompt(SendStudentDoubtCommand command, string description);
+    public RoleContent BuildPrompt(SendStudentDoubtCommand? command = null, string? description = null);
 }

@@ -43,14 +43,11 @@ public class SendStudentDoubtCommandHandler : IRequestHandler<SendStudentDoubtCo
 
     public async Task<SendStudentDoubtCommandResult> Handle(SendStudentDoubtCommand command, CancellationToken cancellationToken)
     {
-        var message = await HandlerMessageAsync(command).ConfigureAwait(false);
+        var messages = await HandlerMessageAsync(command).ConfigureAwait(false);
 
         var result = await _openAiApi.OpenAiApi.PostGptConversationAsync(new()
         {
-            Messages = new[]
-            {
-                message,
-            }
+            Messages = messages
         });
 
         if (result is null)
@@ -58,7 +55,7 @@ public class SendStudentDoubtCommandHandler : IRequestHandler<SendStudentDoubtCo
             throw new InvalidOperationException();
         }
 
-        await SaveDoubtAsync(result, command, message)
+        await SaveDoubtAsync(result, command, messages.Last())
             .ConfigureAwait(false);
 
         return new()
@@ -67,18 +64,32 @@ public class SendStudentDoubtCommandHandler : IRequestHandler<SendStudentDoubtCo
         };
     }
 
-    private async Task<RoleContent> HandlerMessageAsync(SendStudentDoubtCommand command)
+    private async Task<RoleContent[]> HandlerMessageAsync(SendStudentDoubtCommand command)
     {
         var handlerDoubtPrompt = HandlerDoubtPromptStrategy.GetStrategy(command.Type);
 
         if (command.Type is DoubtType.Exercise)
         {
+            var handlerSystemPrompt = HandlerDoubtPromptStrategy.GetStrategy(DoubtType.System);
+            var systemMessage = handlerSystemPrompt.BuildPrompt();
+            
             var question = await GetQuestionAsync(command).ConfigureAwait(false);
-            return handlerDoubtPrompt.BuildPrompt(command, question.Description);
+            var exerciseMessage = handlerDoubtPrompt.BuildPrompt(command, question.Description);
+            
+            return new[]
+            {
+                systemMessage,
+                exerciseMessage,
+            };
         }
         
         var content = await GetContentAsync(command).ConfigureAwait(false);
-        return handlerDoubtPrompt.BuildPrompt(command, content.Description!);
+        var message = handlerDoubtPrompt.BuildPrompt(command, content.Description!);
+
+        return new[]
+        {
+            message,
+        };
     }
 
     private async Task<Question> GetQuestionAsync(SendStudentDoubtCommand command)
