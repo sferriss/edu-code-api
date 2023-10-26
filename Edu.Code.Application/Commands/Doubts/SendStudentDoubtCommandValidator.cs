@@ -12,6 +12,6 @@ public class SendStudentDoubtCommandValidator : AbstractValidator<SendStudentDou
         
         RuleFor(x => x.Doubt)
             .NotEmpty()
-            .MaximumLength(200);
+            .MaximumLength(600);
     }
 }
