@@ -25,7 +25,7 @@ public class ExerciseDoubtPromptStrategy : IDoubtPromptStrategy
     
     private static string FormatExercise(string description)
     {
-        return $"Exercício: \n{description}\n";
+        return $"Exercício: \n{description}";
     }
     
     private static string FormatDoubt(SendStudentDoubtCommand command)
