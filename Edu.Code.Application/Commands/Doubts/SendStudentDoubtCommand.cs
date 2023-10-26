@@ -10,6 +10,8 @@ public class SendStudentDoubtCommand : IRequest<SendStudentDoubtCommandResult>
     public string? Code { get; set; }
 
     public string Doubt { get; set; } = null!;
+    
+    public string? OutPut { get; set; }
 
     public DoubtType Type { get; set; }
 

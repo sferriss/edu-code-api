@@ -13,7 +13,8 @@ public class ExerciseDoubtPromptStrategy : IDoubtPromptStrategy
             Content = $"{FormatInstruction()}\n" + 
                       $"{FormatExercise(description!)}\n" +
                       $"{FormatDoubt(command!)}\n" +
-                      $"{FormatCode(command)}\n"
+                      $"{FormatCode(command!)}\n" +
+                      $"${FormatErrorMessage(command!)}"
         };
     }
     
@@ -24,7 +25,7 @@ public class ExerciseDoubtPromptStrategy : IDoubtPromptStrategy
     
     private static string FormatExercise(string description)
     {
-        return $"Exercício: {description}\n";
+        return $"Exercício: \n{description}\n";
     }
     
     private static string FormatDoubt(SendStudentDoubtCommand command)
@@ -34,6 +35,23 @@ public class ExerciseDoubtPromptStrategy : IDoubtPromptStrategy
     
     private static string FormatCode(SendStudentDoubtCommand command)
     {
-        return string.IsNullOrEmpty(command.Code) ? string.Empty : $"Código do aluno: {command.Code}";
+        return string.IsNullOrEmpty(command.Code) ? string.Empty : $"Código do aluno: \n{command.Code}";
+    }
+    
+    private static string FormatErrorMessage(SendStudentDoubtCommand command)
+    {
+        var result = string.Empty;
+
+        if (string.IsNullOrEmpty(command.OutPut))
+        {
+            return result;
+        }
+            
+        if (command.OutPut.Contains("error") || command.OutPut.Contains("Exception"))
+        {
+            result = $"Mensagem de erro: \n{command.OutPut}";
+        }
+
+        return result;
     }
 }
