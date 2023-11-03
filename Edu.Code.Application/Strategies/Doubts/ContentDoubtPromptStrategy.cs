@@ -18,7 +18,7 @@ public class ContentDoubtPromptStrategy : IDoubtPromptStrategy
     
     private static string FormatInstruction()
     {
-        return "Como responder: Você é um tutor de programação ajudando um aluno, responda a dúvida baseado no conteúdo de referência. Não de respostas muito longas.";
+        return "Como responder: Você é um tutor de programação ajudando um aluno, responda a dúvida baseado no conteúdo de referência. Só responda perguntas relacionadas ao conteúdo.";
     }
     
     private static string FormatContent(string description)
