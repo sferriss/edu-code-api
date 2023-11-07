@@ -14,7 +14,7 @@ public class ExerciseDoubtPromptStrategy : IDoubtPromptStrategy
                       $"{FormatExercise(description!)}\n" +
                       $"{FormatDoubt(command!)}\n" +
                       $"{FormatCode(command!)}\n" +
-                      $"${FormatErrorMessage(command!)}"
+                      $"{FormatErrorMessage(command!)}"
         };
     }
     
