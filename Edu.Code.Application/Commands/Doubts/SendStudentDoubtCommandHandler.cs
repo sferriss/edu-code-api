@@ -78,7 +78,7 @@ public class SendStudentDoubtCommandHandler : IRequestHandler<SendStudentDoubtCo
             
             return new[]
             {
-                systemMessage,
+                // systemMessage,
                 exerciseMessage,
             };
         }
